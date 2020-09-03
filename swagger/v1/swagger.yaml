@@ -1,0 +1,94 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/carts":
+    post:
+      summary: Creates a cart with logged-in user
+      tags:
+      - Carts
+      parameters:
+      - name: api_token
+        in: header
+        schema:
+          type: object
+          properties:
+            Authorization:
+              type: string
+          required:
+          - Authorization
+      responses:
+        '200':
+          description: Cart created
+          content: {}
+        '404':
+          description: Product not found
+          content: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                quantity:
+                  type: integer
+                product_id:
+                  type: integer
+              required:
+              - quantity
+              - product_id
+    get:
+      summary: Displays the cart items with logged-in user
+      tags:
+      - Carts
+      parameters:
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Cart items displayed
+          content: {}
+  "/":
+    get:
+      summary: Fetches all products
+      tags:
+      - Products
+      responses:
+        '200':
+          description: Products fetched
+          content: {}
+  "/user_sessions":
+    post:
+      summary: Authenticates an user
+      tags:
+      - User Sessions
+      parameters: []
+      responses:
+        '200':
+          description: User authenticated
+          content: {}
+        '401':
+          description: User not authenticated
+          content: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+              required:
+              - email
+              - password
+servers:
+- url: http://{defaultHost}
+  variables:
+    defaultHost:
+      default: localhost:3000
